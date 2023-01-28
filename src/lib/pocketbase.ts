@@ -11,7 +11,14 @@ pb.authStore.onChange((auth) => {
     currentUser.set(pb.authStore.model);
 });
 
-export enum DashboardTables {
+export enum DashboardViews {
     Jobs,
-    Printers
+    Printers,
+    Account
+};
+
+export enum LoginViews {
+    Login,
+    Signup,
+    Forgot
 };

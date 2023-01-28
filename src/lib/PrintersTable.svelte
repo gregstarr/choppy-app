@@ -21,7 +21,7 @@
                 "size_y": printer_data.y,
                 "size_z": printer_data.z,
                 "tolerance": printer_data.tolerance,
-                "user": $currentUser.id
+                "user": $currentUser.id,
             };
             const createdPrinter = await pb.collection("printers").create(data);
             printers.unshift(createdPrinter);
@@ -34,7 +34,7 @@
 </script>
 
 <div class="bc">
-    <button class="outline contrast" on:click={newPrinter}>New</button>
+    <button class="outline contrast new-button" on:click={newPrinter}>New</button>
 </div>
 
 <table>
@@ -49,7 +49,7 @@
     </thead>
     <tbody>
         <tr>
-            <th scope="row"><input type="text" placeholder="name" required bind:value={printer_data.name}></th>
+            <td><input type="text" placeholder="name" required bind:value={printer_data.name}></td>
             <td><input type="text" placeholder="x" required bind:value={printer_data.x}></td>
             <td><input type="text" placeholder="y" required bind:value={printer_data.y}></td>
             <td><input type="text" placeholder="z" required bind:value={printer_data.z}></td>
@@ -57,7 +57,7 @@
         </tr>
         {#each printers as printer (printer.id)}
             <tr>
-                <th scope="row">{printer.name}</th>
+                <td>{printer.name}</td>
                 <td>{printer.size_x}</td>
                 <td>{printer.size_y}</td>
                 <td>{printer.size_z}</td>
@@ -68,14 +68,28 @@
 </table>
 
 <style>
-    button {
-        font-size: medium;
-        max-width: 150px;
+    .new-button {
+      max-width: 150px;
+      margin-bottom: 10px;
     }
-
+  
     .bc {
-        display: flex;
-        justify-content: start;
-        width: 100%;
+      display: flex;
+      justify-content: start;
+      width: 100%;
     }
-</style>
+  
+    td {
+      padding: 10px;
+    }
+    th {
+      font-weight: 500;
+      font-size: large;
+    }
+    td, input, button {
+      font-size: medium;
+    }
+    input, button {
+      margin: 0
+    }
+  </style>

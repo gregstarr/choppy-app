@@ -1,141 +1,170 @@
 <script lang="ts">
-    import { currentUser, pb } from "./pocketbase";
+  import { currentUser, pb, LoginViews } from "./pocketbase";
 
-    let signup_data = {
-        username: null,
-        email: null,
-        password: null
+
+  let form_data = {
+    username: null,
+    email: null,
+    password: null,
+    confirm_password: null,
+  };
+
+  let err_msgs = [];
+  let good_msg: string;
+
+  let view = LoginViews.Login;
+
+  async function login() {
+    err_msgs = [];
+    good_msg = "";
+    await pb.collection("users").authWithPassword(form_data.username, form_data.password)
+      .catch(handle_form_errors)
+  }
+
+  async function forgot_password() {
+    err_msgs = [];
+    good_msg = "";
+    await pb.collection("users").requestPasswordReset(form_data.email)
+      .then(()=>{good_msg = "send password reset email"})
+      .catch(handle_form_errors)
+  }
+
+  async function signUp() {
+    err_msgs = [];
+    good_msg = "";
+    const data = {
+      username: form_data.username,
+      email: form_data.email,
+      emailVisibility: true,
+      password: form_data.password,
+      passwordConfirm: form_data.confirm_password,
     };
-    let login_data = {
-        username: null,
-        password: null
-    };
-    
-    let err_msgs = [];
+    await pb.collection("users").create(data)
+      .then(async () => {
+        await pb.collection("users").requestVerification(data.email);
+      }).then(async () => {
+        await login();
+      }).catch(handle_form_errors);
+  }
 
-    let show_login = true;
+  function handle_form_errors(err) {
+    console.log(err.data);
+    good_msg = "";
+    err_msgs.push(err.data.message);
+    ["username", "email", "password"].forEach((key) => {
+      if (key in err.data.data) {
+        err_msgs.push(key + ": " + err.data.data[key].message);
+      }
+    });
+    err_msgs = err_msgs;
+  }
 
-    async function login() {
-        err_msgs = [];
-        try {
-            await pb
-                .collection("users")
-                .authWithPassword(login_data.username, login_data.password);
-        } catch (err) {
-            console.log(err.data);
-            err_msgs.push(err.data.message);
-            err_msgs = err_msgs;
-        }
-    }
-
-    async function signUp() {
-        err_msgs = [];
-        try {
-            const data = {
-                username: signup_data.username,
-                email: signup_data.email,
-                emailVisibility: true,
-                password: signup_data.password,
-                passwordConfirm: signup_data.password,
-            };
-            const createdUser = await pb.collection("users").create(data);
-            login_data.username = signup_data.username;
-            login_data.password = signup_data.password;
-            await login();
-        } catch (err) {
-            console.log(err.data);
-            ["username", "email", "password"].forEach(key => {
-                if (key in err.data.data) {
-                    err_msgs.push(key + ": " + err.data.data[key].message);
-                }
-            });
-            err_msgs = err_msgs;
-        }
-    }
-
-    function toggleSignup() {
-        show_login = !show_login;
-        err_msgs = [];
-            let invalid_str = {
-            "username": "spelling",
-            "email": "spelling",
-            "password": "spelling",
-        };
-    }
 </script>
 
-
 <ul class="error-messages">
-    {#each err_msgs as msg}
-        <li>{msg}</li>
-    {/each}
+  {#each err_msgs as msg}
+    <li>{msg}</li>
+  {/each}
 </ul>
-
-<button class="secondary" on:click={toggleSignup}>
-    {show_login ? "Sign Up" : "Log In"}
-</button>
-
-<hr>
-
-{#if show_login}
-
-    <form on:submit|preventDefault>
-        <label for="login-username">
-            Username or Email
-            <input
-                type="text"
-                bind:value={login_data.username}
-                required
-                id="login-username"
-            />
-        </label>
-        <label for="login-password">
-            Password
-            <input
-                type="password"
-                bind:value={login_data.password}
-                required
-                id="login-password"
-            />
-        </label>
-        <button on:click={login}>login</button>
-    </form>
-
-{:else}
-
-    <form on:submit|preventDefault>
-        <label for="signup-username">
-            Username
-            <input
-                type="text"
-                bind:value={signup_data.username}
-                id="signup-username"
-            />
-        </label>
-        <label for="signup-email">
-            Email
-            <input
-                type="text"
-                bind:value={signup_data.email}
-                id="signup-email"
-            />
-        </label>
-        <label for="signup-password">
-            Password
-            <input
-                type="password"
-                bind:value={signup_data.password}
-                id="signup-password"
-            />
-        </label>
-        <button on:click={signUp}>signup</button>
-    </form>
+{#if good_msg}
+<p>{good_msg}</p>
 {/if}
 
 
+<div class="top-bar">
+  <button class={`outline ${view === LoginViews.Login ? "contrast" : "secondary"}`} on:click={()=>{view=LoginViews.Login}}>Log in</button>
+  <button class={`outline ${view === LoginViews.Signup ? "contrast" : "secondary"}`} on:click={()=>{view=LoginViews.Signup}}>Sign up</button>
+  <button class={`outline ${view === LoginViews.Forgot ? "contrast" : "secondary"}`} on:click={()=>{view=LoginViews.Forgot}}>forgot password</button>
+</div>
+
+<hr />
+
+{#if view === LoginViews.Login}
+
+<form on:submit|preventDefault>
+  <label for="login-username">
+    Username or Email
+    <input
+      type="text"
+      bind:value={form_data.username}
+      required
+      id="login-username"
+    />
+  </label>
+  <label for="login-password">
+    Password
+    <input
+      type="password"
+      bind:value={form_data.password}
+      required
+      id="login-password"
+    />
+  </label>
+  <button on:click={login}>login</button>
+</form>
+    
+{:else if view === LoginViews.Signup}
+
+<form on:submit|preventDefault>
+  <label for="signup-username">
+    Username
+    <input
+      type="text"
+      bind:value={form_data.username}
+      id="signup-username"
+    />
+  </label>
+  <label for="signup-email">
+    Email
+    <input type="text" bind:value={form_data.email} id="signup-email" />
+  </label>
+  <label for="signup-password">
+    Password
+    <input
+      type="password"
+      bind:value={form_data.password}
+      id="signup-password"
+    />
+  </label>
+  <label for="confirm-password">
+    Confirm Password
+    <input
+      type="password"
+      bind:value={form_data.confirm_password}
+      id="confirm-password"
+    />
+  </label>
+  <button on:click={signUp}>signup</button>
+</form>
+
+{:else if view === LoginViews.Forgot}
+
+<form on:submit|preventDefault>
+  <label for="login-username">
+    Email
+    <input
+      type="text"
+      bind:value={form_data.email}
+      required
+      id="login-username"
+    />
+  </label>
+  <button on:click={forgot_password}>send reset</button>
+</form>
+
+{/if}
+
 <style>
-    .error-messages {
-        color: red;
-        font-size: medium;
-    }
+  .error-messages {
+    color: red;
+    font-size: medium;
+  }
+  .top-bar {
+    display: flex;
+    column-gap: 10px;
+  }
+  p {
+    color: green;
+    font-size: medium;
+  }
 </style>

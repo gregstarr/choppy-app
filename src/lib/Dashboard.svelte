@@ -1,11 +1,12 @@
 <script lang="ts">
     import { onMount, onDestroy } from "svelte";
-    import { currentUser, pb, DashboardTables } from "./pocketbase";
+    import { currentUser, pb, DashboardViews } from "./pocketbase";
     import JobsTable from "./JobsTable.svelte";
     import PrintersTable from "./PrintersTable.svelte";
+    import Account from "./Account.svelte"
     import Nav from "./Nav.svelte";
 
-    let table_name = DashboardTables.Jobs;
+    let table_name = DashboardViews.Jobs;
 
     let jobs = [];
     let printers = [];
@@ -17,8 +18,16 @@
             expand: "printer"
         });
         jobs = jobs_result.items;
+        for (let i = 0; i < jobs.length; i++) {
+            if (jobs[i].status == "finished") {
+                const url = pb.getFileUrl(jobs[i], jobs[i].output);
+                jobs[i].url = url;
+            }
+        }
+        
         console.log(jobs)
 
+        console.log("getting printers")
         const printers_result = await pb.collection("printers").getList(1, 50, {
             sort: "-created"
         });
@@ -36,10 +45,12 @@
 <div class="line"></div>
 
 <div class="d-container">
-    {#if table_name === DashboardTables.Jobs}
+    {#if table_name === DashboardViews.Jobs}
         <JobsTable bind:jobs={jobs} printers={printers}/>
-    {:else if table_name === DashboardTables.Printers}
+    {:else if table_name === DashboardViews.Printers}
         <PrintersTable bind:printers={printers}/>
+    {:else if table_name === DashboardViews.Account}
+        <Account />
     {/if}
 </div>
 
