@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { DashboardViews } from "./pocketbase";
+  import { DashboardViews } from "./defs";
   export let table_name: DashboardViews;
 </script>
 

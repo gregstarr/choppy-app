@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { currentUser, pb, LoginViews } from "./pocketbase";
+  import { pb } from "./pocketbase";
+  import { LoginViews } from "./defs";
 
 
   let form_data = {
@@ -88,6 +89,7 @@
       type="text"
       bind:value={form_data.username}
       required
+      autocomplete="username"
       id="login-username"
     />
   </label>
@@ -98,6 +100,7 @@
       bind:value={form_data.password}
       required
       id="login-password"
+      autocomplete="current-password"
     />
   </label>
   <button on:click={login}>login</button>
@@ -112,11 +115,17 @@
       type="text"
       bind:value={form_data.username}
       id="signup-username"
+      autocomplete="username"
     />
   </label>
   <label for="signup-email">
     Email
-    <input type="text" bind:value={form_data.email} id="signup-email" />
+    <input
+      type="text"
+      bind:value={form_data.email}
+      id="signup-email"
+      autocomplete="email"
+    />
   </label>
   <label for="signup-password">
     Password
@@ -124,6 +133,7 @@
       type="password"
       bind:value={form_data.password}
       id="signup-password"
+      autocomplete="new-password"
     />
   </label>
   <label for="confirm-password">
@@ -140,13 +150,14 @@
 {:else if view === LoginViews.Forgot}
 
 <form on:submit|preventDefault>
-  <label for="login-username">
+  <label for="forgot-email">
     Email
     <input
       type="text"
       bind:value={form_data.email}
       required
-      id="login-username"
+      id="forgot-email"
+      autocomplete="email"
     />
   </label>
   <button on:click={forgot_password}>send reset</button>

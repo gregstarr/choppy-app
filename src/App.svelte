@@ -3,15 +3,17 @@
   import Login from "./lib/Login.svelte";
   import { currentUser, pb } from "./lib/pocketbase";
   import Top from "./lib/Top.svelte";
-  import {onMount} from "svelte"
+  import { onMount } from "svelte"
 
   onMount( async () => {
-    console.log("updating auth")
-    await pb.collection('users').authRefresh()
-      .catch((err) => {
-        console.log(err)
-        pb.authStore.clear()
-      });
+    if( $currentUser ) {
+      console.log("updating auth")
+      await pb.collection('users').authRefresh()
+        .catch((err) => {
+          console.log(err)
+          pb.authStore.clear()
+        });
+    }
   })
 
 </script>

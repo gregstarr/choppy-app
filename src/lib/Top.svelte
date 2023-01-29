@@ -8,7 +8,7 @@
 
 <div class="title-area">
   <a href="/" class="main-title">
-    <img src="/logo.png" alt="" />
+    <img src="/logo.png" width="100px" height="100px" alt="" />
     <h1>Choppy</h1>
   </a>
   <div class="logout">
@@ -40,9 +40,6 @@
   }
   h1 {
     margin-bottom: 0;
-  }
-  img {
-    height: 100px;
   }
 
   .title-area {
