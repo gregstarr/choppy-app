@@ -63,16 +63,20 @@
         <td><progress value={job.progress} max="100" /></td>
         <td class="ctd">
           {#if job.status === JobStatus.Finished}
-          <a role="button" class="outline download-button" href={job.file_url} download="output"><img src="/download.svg" alt="download"></a>
+          <a role="button" class="secondary outline download-button" href={job.file_url} download="output"><img src="/download.svg" alt="download"></a>
           {/if}
         </td>
-        <td>{job.status}</td>
+        <td>{JobStatus[job.status]}</td>
       </tr>
     {/each}
   </tbody>
 </table>
 
 <style>
+  progress {
+    margin-bottom: 0;
+  }
+
   .ctd {
     text-align: center;
   }

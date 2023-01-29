@@ -64,11 +64,15 @@ class DataManager {
   _sub_num = 0
 
   get job_list() {
-    return Object.values(this.jobs)
+    let list = Object.values(this.jobs);
+    list.sort( (a, b) => {return b.created.localeCompare(a.created)})
+    return list
   }
 
   get printer_list() {
-    return Object.values(this.printers)
+    let list = Object.values(this.printers);
+    list.sort( (a, b) => {return a.name.localeCompare(b.name)})
+    return list
   }
 
   subscribe(func: Function) {
