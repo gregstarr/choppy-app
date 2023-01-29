@@ -8,36 +8,38 @@
     <ul>
       <li>
         <button
-          class={table_name === DashboardViews.Jobs ? "contrast" : "secondary"}
+          class={table_name === DashboardViews.Jobs 
+          ? "outline" 
+          : "secondary"}
           on:click={() => {
             table_name = DashboardViews.Jobs;
           }}
         >
-          Jobs
+        <img src="/layout-wtf.svg" alt="jobs">
         </button>
       </li>
       <li>
         <button
           class={table_name === DashboardViews.Printers
-            ? "contrast"
+            ? "outline"
             : "secondary"}
           on:click={() => {
             table_name = DashboardViews.Printers;
           }}
         >
-          Printers
+        <img src="/box.svg" alt="printers">
         </button>
       </li>
       <li>
         <button
           class={table_name === DashboardViews.Account
-            ? "contrast"
+            ? "outline"
             : "secondary"}
           on:click={() => {
             table_name = DashboardViews.Account;
           }}
         >
-          Account
+        <img src="/person.svg" alt="account">
         </button>
       </li>
     </ul>

@@ -3,6 +3,7 @@
   import Login from "./lib/Login.svelte";
   import { currentUser, pb } from "./lib/pocketbase";
   import Top from "./lib/Top.svelte";
+  import Readme from "./lib/Readme.svelte";
   import { onMount } from "svelte"
 
   onMount( async () => {
@@ -26,7 +27,20 @@
   <div class="dashboard-container"><Dashboard /></div>
 {/if}
 
+<div class="line"></div>
+<div class="container">
+  <Readme />
+</div>
+
+
 <style>
+  .line {
+    background-color: gray;
+    width: 100%;
+    height: 2px;
+    margin-bottom: 30px;
+  }
+
   .dashboard-container {
     display: flex;
     flex-direction: row;

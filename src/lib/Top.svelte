@@ -11,23 +11,34 @@
     <img src="/logo.png" width="100px" height="100px" alt="" />
     <h1>Choppy</h1>
   </a>
-  <div class="logout">
-    {#if $currentUser}
-    {#if $currentUser.verified}
-    {$currentUser.username}
-    {:else}
-      {$currentUser.username}: Verify email address
-    {/if}  
-    <a href="/" on:click={logout}>Log Out</a>
-    {/if}
+  <div class="right-side">
+    <div class="logout">
+      {#if $currentUser}
+      {#if $currentUser.verified}
+      {$currentUser.username}
+      {:else}
+        {$currentUser.username}: Verify email address
+      {/if}
+      <a href="/" on:click={logout}>Log Out</a>
+      {/if}
+    </div>
   </div>
 </div>
 <div class="line" />
 
 
 <style>
-  .logout {
+  
+  .right-side {
     flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: flex-end;
+    column-gap: 40px;
+    margin-bottom: 10px;
+  }
+  .logout {
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -37,6 +48,7 @@
     display: flex;
     align-items: center;
     column-gap: 10px;
+    min-width: fit-content;
   }
   h1 {
     margin-bottom: 0;
@@ -46,6 +58,7 @@
     min-height: 150px;
     display: flex;
     justify-content: start;
+    column-gap: 40px;
   }
 
   .line {

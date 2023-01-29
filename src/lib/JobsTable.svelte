@@ -19,7 +19,9 @@
     aria-busy={loading}
     on:click={new_job}
   >
-    {(loading? "": "New")}
+    {#if !loading}
+    <img src="/plus.svg" alt="new">
+    {/if}
   </button>
 </div>
 
@@ -59,11 +61,9 @@
         <td>{job.input}</td>
         <td>{job.printer.name}</td>
         <td><progress value={job.progress} max="100" /></td>
-        <td>
+        <td class="ctd">
           {#if job.status === JobStatus.Finished}
-          <a role="button" class="outline" href={job.file_url} download="output">Download</a>
-          {:else}
-          <a role="button" class="secondary outline" href="/" aria-disabled="true">Download</a>
+          <a role="button" class="outline download-button" href={job.file_url} download="output"><img src="/download.svg" alt="download"></a>
           {/if}
         </td>
         <td>{job.status}</td>
@@ -73,9 +73,18 @@
 </table>
 
 <style>
+  .ctd {
+    text-align: center;
+  }
+
+  .download-button {
+    padding: 5px 10px 5px 10px;
+  }
+
   .new-button {
-    max-width: 150px;
+    max-width: 100px;
     margin-bottom: 10px;
+    padding: 5px
   }
 
   .bc {
@@ -86,6 +95,7 @@
 
   td {
     padding: 10px;
+    max-width: 300px;
   }
   th {
     font-weight: 500;

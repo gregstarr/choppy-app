@@ -47,6 +47,7 @@
     }
     .d-header {
         max-height: 50px;
+        margin-bottom: 20px;
     }
     .d-container {
         display: flex;
@@ -57,6 +58,7 @@
         padding-left: 20px;
         padding-right: 20px;
         padding-top: 20px;
+        min-height: 400px;
     }
     .thin {
         max-width: 150px;

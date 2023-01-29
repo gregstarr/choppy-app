@@ -4,7 +4,9 @@
 </script>
 
 <div class="bc">
-  <button class="outline contrast new-button" on:click={$data.new_printer}>New</button>
+  <button class="outline contrast new-button" on:click={$data.new_printer}>
+    <img src="/plus.svg" alt="new">
+  </button>
 </div>
 
 <table>
@@ -79,8 +81,9 @@
 
 <style>
   .new-button {
-    max-width: 150px;
+    max-width: 100px;
     margin-bottom: 10px;
+    padding: 5px
   }
 
   .bc {
@@ -91,6 +94,7 @@
 
   td {
     padding: 10px;
+    max-width: 300px;
   }
   th {
     font-weight: 500;
