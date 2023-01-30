@@ -16,13 +16,15 @@ export enum LoginViews {
 export enum JobStatus {
   Waiting,
   Processing,
-  Finished
+  Finished,
+  Failed
 }
 
 export const status_map = {
   "waiting": JobStatus.Waiting,
   "processing": JobStatus.Processing,
   "finished": JobStatus.Finished,
+  "failed": JobStatus.Failed,
 }
 
 export interface Job {
@@ -139,7 +141,7 @@ class DataManager {
   add_record_job(record: Record) {
     console.log(`adding job record: ${record.id} (${record["status"]})`)
     let job: Job = {
-      progress: (record["progress_tree"] + record["progress_connector"]) / 200,
+      progress: (record["progress_tree"] + record["progress_connector"]) / 2,
       status: status_map[record["status"]],
       id: record["id"],
       created: record["created"],
@@ -147,8 +149,10 @@ class DataManager {
       output: record["output"],
       printer: this.printers[record["printer"]],
     }
-    if (job.status === JobStatus.Finished) {
+    if( job.status === JobStatus.Finished ) {
       job.file_url = pb.getFileUrl(record, job.output);
+    } else if ( job.status === JobStatus.Waiting || job.status === JobStatus.Processing ) {
+      pb.collection("jobs").subscribe(job.id, this.handle_job_update);
     }
     this.jobs[job.id] = job
     return job.id
@@ -178,7 +182,7 @@ class DataManager {
     
     this.jobs[job_id].status = event.record.status;
     const progsum = event.record.progress_tree + event.record.progress_connector;
-    this.jobs[job_id].progress = progsum / 200
+    this.jobs[job_id].progress = progsum / 2
     if( this.jobs[job_id].status === JobStatus.Finished ) {
       pb.collection("jobs").unsubscribe(job_id)
       this.jobs[job_id].file_url = pb.getFileUrl(event.record, event.record.output);
