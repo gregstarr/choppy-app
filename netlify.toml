@@ -23,7 +23,7 @@
     img-src "self";
     script-src "self";
     style-src "self";
-    frame-ancestors "none"'''
+    object-src "none"'''
     Cache-Control = "max-age=604800"
     Strict-Transport-Security = "max-age=63072000"
     X-Content-Type-Options = "nosniff"
