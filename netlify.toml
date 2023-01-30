@@ -1,0 +1,23 @@
+[build]
+  publish = "dist/"
+
+  # Default build command.
+  command = "npm run build"
+
+[[plugins]]
+  # Installs the Lighthouse Build Plugin for all deploy contexts
+  package = "@netlify/plugin-lighthouse"
+
+[context.production]
+  environment = { NODE_VERSION = "19.4.0" }
+
+
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Content-Security-Policy = "default-src https:"
+    Cache-Control = "max-age=604800"
+    Strict-Transport-Security = "max-age=63072000"
