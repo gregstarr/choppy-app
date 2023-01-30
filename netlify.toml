@@ -18,9 +18,7 @@
   [headers.values]
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
-    Content-Security-Policy = '''
-    default-src "self" shiny-crumble-7dd594.netlify.app;
-    object-src "none"'''
+    Content-Security-Policy = "default-src https:"
     Cache-Control = "max-age=604800"
     Strict-Transport-Security = "max-age=63072000"
     X-Content-Type-Options = "nosniff"
