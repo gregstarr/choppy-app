@@ -152,7 +152,7 @@ class DataManager {
     if( job.status === JobStatus.Finished ) {
       job.file_url = pb.getFileUrl(record, job.output);
     } else if ( job.status === JobStatus.Waiting || job.status === JobStatus.Processing ) {
-      pb.collection("jobs").subscribe(job.id, this.handle_job_update);
+      pb.collection("jobs").subscribe(job.id, (event) => {this.handle_job_update(event)});
     }
     this.jobs[job.id] = job
     return job.id
@@ -170,7 +170,7 @@ class DataManager {
     }
     const record = await pb.collection("jobs").create(this.nj_form);
     const job_id = this.add_record_job(record)
-    await pb.collection("jobs").subscribe(job_id, this.handle_job_update);
+    await pb.collection("jobs").subscribe(job_id, (event) => {this.handle_job_update(event)});
     this.nj_form = new FormData()
     this.call_subscriptions()
   }
@@ -180,7 +180,7 @@ class DataManager {
     const job_id = event.record.id
     if( !Object.hasOwn(this.jobs, job_id) ) return
     
-    this.jobs[job_id].status = event.record.status;
+    this.jobs[job_id].status = status_map[event.record.status];
     const progsum = event.record.progress_tree + event.record.progress_connector;
     this.jobs[job_id].progress = progsum / 2
     if( this.jobs[job_id].status === JobStatus.Finished ) {
