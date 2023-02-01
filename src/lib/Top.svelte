@@ -59,6 +59,7 @@
     display: flex;
     justify-content: start;
     column-gap: 40px;
+    padding: 10px;
   }
 
   .line {

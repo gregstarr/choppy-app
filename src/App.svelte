@@ -5,6 +5,7 @@
   import Top from "./lib/Top.svelte";
   import Readme from "./lib/Readme.svelte";
   import { onMount } from "svelte"
+  import Footer from "./lib/Footer.svelte";
 
   onMount( async () => {
     if( $currentUser ) {
@@ -31,6 +32,8 @@
 <div class="container">
   <Readme />
 </div>
+
+<Footer />
 
 
 <style>
