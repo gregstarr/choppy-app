@@ -4,7 +4,7 @@
 </script>
 
 <div class="bc">
-  <button class="outline contrast new-button" on:click={$data.new_printer}>
+  <button class="outline contrast new-button" on:click={() => {$data.new_printer()}}>
     <img src="/plus.svg" alt="new">
   </button>
 </div>
