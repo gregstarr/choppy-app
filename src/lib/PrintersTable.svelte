@@ -3,13 +3,8 @@
 
 </script>
 
-<div class="bc">
-  <button class="outline contrast new-button" on:click={() => {$data.new_printer()}}>
-    <img src="/plus.svg" alt="new">
-  </button>
-</div>
-
-<table>
+<figure>
+<table role="grid">
   <thead>
     <tr>
       <th scope="col"> Name </th>
@@ -78,19 +73,9 @@
     {/each}
   </tbody>
 </table>
+</figure>
 
 <style>
-  .new-button {
-    max-width: 100px;
-    margin-bottom: 10px;
-    padding: 5px
-  }
-
-  .bc {
-    display: flex;
-    justify-content: start;
-    width: 100%;
-  }
 
   td {
     padding: 10px;
@@ -101,12 +86,10 @@
     font-size: large;
   }
   td,
-  input,
-  button {
+  input {
     font-size: medium;
   }
-  input,
-  button {
+  input {
     margin: 0;
   }
 </style>

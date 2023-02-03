@@ -25,10 +25,10 @@
 {#if !$currentUser}
   <div class="container"><Login /></div>
 {:else}
-  <div class="dashboard-container"><Dashboard /></div>
+  <div class="container"><Dashboard /></div>
 {/if}
 
-<div class="line"></div>
+<div class="line container-fluid"></div>
 <div class="container">
   <Readme />
 </div>
@@ -44,10 +44,4 @@
     margin-bottom: 30px;
   }
 
-  .dashboard-container {
-    display: flex;
-    flex-direction: row;
-    column-gap: 10px;
-    align-content: flex-start;
-  }
 </style>

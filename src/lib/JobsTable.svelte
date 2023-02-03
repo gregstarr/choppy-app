@@ -2,30 +2,10 @@
   import moment from "moment";
   import { data, JobStatus } from "./defs";
 
-  let loading = false
-
-  function new_job() {
-    loading = true;
-    $data.new_job()
-      .catch(err => console.log(err))
-      .then(() => {loading = false})
-  }
-
 </script>
 
-<div class="bc">
-  <button
-    class="outline contrast new-button"
-    aria-busy={loading}
-    on:click={new_job}
-  >
-    {#if !loading}
-    <img src="/plus.svg" alt="new">
-    {/if}
-  </button>
-</div>
-
-<table>
+<figure class="container">
+<table role="grid">
   <thead>
     <tr>
       <th> Created </th>
@@ -63,7 +43,12 @@
         <td><progress value={job.progress} max="100" /></td>
         <td class="ctd">
           {#if job.status === JobStatus.Finished}
-          <a role="button" class="secondary outline download-button" href={job.file_url} download="output"><img src="/download.svg" alt="download"></a>
+          <a role="button" class="secondary outline download-button" href={job.file_url} download="output">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-download" viewBox="0 0 16 16">
+              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+            </svg>
+          </a>
           {/if}
         </td>
         <td>{JobStatus[job.status]}</td>
@@ -71,6 +56,7 @@
     {/each}
   </tbody>
 </table>
+</figure>
 
 <style>
   progress {
@@ -85,18 +71,6 @@
     padding: 5px 10px 5px 10px;
   }
 
-  .new-button {
-    max-width: 100px;
-    margin-bottom: 10px;
-    padding: 5px
-  }
-
-  .bc {
-    display: flex;
-    justify-content: start;
-    width: 100%;
-  }
-
   td {
     padding: 10px;
     max-width: 300px;
@@ -105,10 +79,10 @@
     font-weight: 500;
     font-size: large;
   }
-  td, input, select, button, a {
+  td, input, select, a {
     font-size: medium;
   }
-  input, select, button {
+  input, select {
     margin: 0
   }
 </style>
