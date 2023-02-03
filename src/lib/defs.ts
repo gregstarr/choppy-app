@@ -159,6 +159,7 @@ class DataManager {
   }
 
   async new_job() {
+    console.log({"printer": this.nj_printer, "user": this.user, "form": this.nj_form})
     this.nj_form.append("printer", this.nj_printer);
     this.nj_form.append("user", this.user);
     this.nj_form.append("status", "waiting")
@@ -171,7 +172,6 @@ class DataManager {
     const record = await pb.collection("jobs").create(this.nj_form);
     const job_id = this.add_record_job(record)
     await pb.collection("jobs").subscribe(job_id, (event) => {this.handle_job_update(event)});
-    this.nj_form = new FormData()
     this.call_subscriptions()
   }
 
@@ -183,7 +183,7 @@ class DataManager {
     this.jobs[job_id].status = status_map[event.record.status];
     const progsum = event.record.progress_tree + event.record.progress_connector;
     this.jobs[job_id].progress = progsum / 2
-    if( this.jobs[job_id].status === JobStatus.Finished ) {
+    if( this.jobs[job_id].status === JobStatus.Finished || this.jobs[job_id].status === JobStatus.Failed) {
       pb.collection("jobs").unsubscribe(job_id)
       this.jobs[job_id].file_url = pb.getFileUrl(event.record, event.record.output);
     }
@@ -191,9 +191,11 @@ class DataManager {
   }
 
   nj_data_change(element) {
+    console.log({"element": element})
     if( element.target.id == "select-printer" ){
       this.nj_printer = element.target.value
     } else {
+      this.nj_form = new FormData()
       this.nj_form.append("input", element.target.files[0])
     }    
   }
