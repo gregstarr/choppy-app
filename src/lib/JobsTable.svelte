@@ -20,11 +20,16 @@
     <tr>
       <td />
       <td>
-        <input type="file" id="file" name="file" required on:change={(e) => {$data.nj_data_change(e)}}
+        <input
+        type="file"
+        id="file"
+        name="file"
+        accept=".stl, .3mf"
+        required on:change={(e) => {$data.nj_data_change(e)}}
         />
       </td>
       <td>
-        <select id="select-printer" required on:change={(e) => {$data.nj_data_change(e)}}>
+        <select value={$data.nj_printer || ""} id="select-printer" required on:change={(e) => {$data.nj_data_change(e)}}>
           <option value="" selected>Printer</option>
           {#each $data.printer_list as printer (printer.id)}
             <option value={printer.id}>{printer.name}</option>

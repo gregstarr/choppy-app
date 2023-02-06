@@ -20,6 +20,7 @@
         ><input
           type="text"
           placeholder="name"
+          value={$data.np_data.name}
           required
           id="name"
           on:change={(e) => {$data.np_data_change(e)}}
@@ -29,6 +30,7 @@
         ><input
           type="text"
           placeholder="x"
+          value={$data.np_data.size_x}
           required
           id="size_x"
           on:change={(e) => {$data.np_data_change(e)}}
@@ -38,6 +40,7 @@
         ><input
           type="text"
           placeholder="y"
+          value={$data.np_data.size_y}
           required
           id="size_y"
           on:change={(e) => {$data.np_data_change(e)}}
@@ -47,6 +50,7 @@
         ><input
           type="text"
           placeholder="z"
+          value={$data.np_data.size_z}
           required
           id="size_z"
           on:change={(e) => {$data.np_data_change(e)}}
@@ -56,6 +60,7 @@
         ><input
           type="text"
           placeholder="tolerance"
+          value={$data.np_data.tolerance}
           required
           id="tolerance"
           on:change={(e) => {$data.np_data_change(e)}}

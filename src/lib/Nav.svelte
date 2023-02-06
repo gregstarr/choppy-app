@@ -1,5 +1,6 @@
 <script lang="ts">
   import { DashboardViews, data } from "./defs";
+  import { currentUser } from "./pocketbase";
   export let table_name: DashboardViews;
 
   let loading = false;
@@ -69,7 +70,7 @@
       <button
         class="outline contrast new-button"
         aria-busy={loading}
-        disabled={table_name == DashboardViews.Account}
+        disabled={table_name == DashboardViews.Account || !$currentUser.verified}
         on:click={new_entry}
       >
         {#if !loading}

@@ -93,7 +93,6 @@ class DataManager {
 
   constructor () {
     currentUser.subscribe(value => {
-      console.log("updating current user in 'data'")
       this.user = value? value.id: null
     })
   }
@@ -106,7 +105,6 @@ class DataManager {
   }
 
   add_record_printer(record: Record) {
-    console.log(`adding printer record: ${record.id} (${record["name"]})`)
     const printer: Printer = {
       id: record.id,
       name: record["name"],
@@ -127,7 +125,6 @@ class DataManager {
   }
 
   np_data_change(element) {
-    console.log(`changing ${element.target.id} to ${element.target.value}`)
     this.np_data[element.target.id] = element.target.value
   }
 
@@ -139,7 +136,6 @@ class DataManager {
   }
 
   add_record_job(record: Record) {
-    console.log(`adding job record: ${record.id} (${record["status"]})`)
     let job: Job = {
       progress: (record["progress_tree"] + record["progress_connector"]) / 2,
       status: status_map[record["status"]],
@@ -159,7 +155,6 @@ class DataManager {
   }
 
   async new_job() {
-    console.log({"printer": this.nj_printer, "user": this.user, "form": this.nj_form})
     this.nj_form.append("printer", this.nj_printer);
     this.nj_form.append("user", this.user);
     this.nj_form.append("status", "waiting")
@@ -176,7 +171,6 @@ class DataManager {
   }
 
   handle_job_update(event) {
-    console.log(event.record)
     const job_id = event.record.id
     if( !Object.hasOwn(this.jobs, job_id) ) return
     
@@ -191,7 +185,6 @@ class DataManager {
   }
 
   nj_data_change(element) {
-    console.log({"element": element})
     if( element.target.id == "select-printer" ){
       this.nj_printer = element.target.value
     } else {
