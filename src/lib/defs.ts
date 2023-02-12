@@ -36,6 +36,7 @@ export interface Job {
   printer: Printer;
   progress?: number;
   file_url?: string;
+  n_connectors: number;
 }
 
 export interface Printer {
@@ -144,6 +145,7 @@ class DataManager {
       input: record["input"],
       output: record["output"],
       printer: this.printers[record["printer"]],
+      n_connectors: record["n_connectors"],
     }
     if( job.status === JobStatus.Finished ) {
       job.file_url = pb.getFileUrl(record, job.output);

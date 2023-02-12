@@ -13,6 +13,7 @@
       <th> Printer </th>
       <th> Progress </th>
       <th> Download </th>
+      <th> Connectors </th>
       <th> Status </th>
     </tr>
   </thead>
@@ -39,6 +40,7 @@
       <td />
       <td />
       <td />
+      <td />
     </tr>
     {#each $data.job_list as job (job.id)}
       <tr>
@@ -56,6 +58,7 @@
           </a>
           {/if}
         </td>
+        <td>{job.n_connectors}</td>
         <td>{JobStatus[job.status]}</td>
       </tr>
     {/each}

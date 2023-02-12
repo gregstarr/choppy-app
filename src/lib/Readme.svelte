@@ -5,7 +5,8 @@
 
 <p>
   A free online tool to split up large 3D models (.stl or .3mf) into parts that can fit
-  on your printer.
+  on your printer. <strong>NOTE:</strong> this app is in early alpha and bugs are expected. Help improve
+  the app by emailing any errors you encounter. Stay tuned for updates!
 </p>
 
 <div class="image-container container">
@@ -32,6 +33,7 @@
         </svg>
       </li>
       <li>All numbers are in mm</li>
+      <li>"Tolerance" is how much larger to make the connector holes than the connector pegs. If you aren't sure, choose 0.4</li>
     </ul>
   </li>
   <li> Submit Job
@@ -45,6 +47,11 @@
       <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
       <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
     </svg>
+    <ul>
+      <li>The file is a .tar archive. Extract the files with any tar extractor e.g. 7zip</li>
+      <li>The archive will contain each of the pieces as .stls as well as a single connector peg .stl</li>
+      <li>The "connectors" column tells you how many connectors you need to print out</li>
+    </ul>
   </li>
 </ol>
 

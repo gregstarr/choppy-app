@@ -7,7 +7,15 @@
   import { onMount } from "svelte"
   import Footer from "./lib/Footer.svelte";
 
+  let n_success = 0;
+  let n_total = 0;
+
   onMount( async () => {
+    pb.collection('success_rate').getOne('hnjqu2jrruix7iy').then( (record) => {      
+      n_success = record["n_success"];
+      n_total = record["n_total"];
+    });
+    
     if( $currentUser ) {
       console.log("updating auth")
       await pb.collection('users').authRefresh()
@@ -20,7 +28,7 @@
 
 </script>
 
-<Top />
+<Top n_success={n_success} n_total={n_total}/>
 
 {#if !$currentUser}
   <div class="container"><Login /></div>
