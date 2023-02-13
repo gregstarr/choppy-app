@@ -75,7 +75,7 @@
     justify-content: start;
     align-items: center;
     column-gap: 10px;
-    margin: 15px 15px 15px 100px;
+    margin: 15px;
     padding: 10px;
     border: solid 1px rgba(25, 180, 230, .5);
     background-color: rgba(50, 50, 50, 1);
@@ -117,7 +117,7 @@
     min-height: 120px;
     display: flex;
     justify-content: start;
-    column-gap: 40px;
+    column-gap: 100px;
     padding: 10px;
     flex-wrap: wrap;
   }
