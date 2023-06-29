@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@okrad/svelte-progressbar": "^1.11.3",
-    "@picocss/pico": "^1.5.6",
+    "@picocss/pico": "^1.5.10",
     "moment": "^2.29.4",
     "pocketbase": "^0.10.1"
   },
